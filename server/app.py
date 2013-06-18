@@ -16,20 +16,18 @@ redis_client.connect()
 
 
 class StaticHandler(tornado.web.RequestHandler):
-    def get(self, filename):
-        if (filename == ""):
-            filename = "index.htm"
-        self.render('../client/'+ filename)
+    def get(self):
+        self.render('../client/index.htm')
         
 
 if __name__ == "__main__":
     import logging
-    logging.getLogger().setLevel(logging.WARNING)
+    logging.getLogger().setLevel(logging.DEBUG)
 
     app = tornado.web.Application(
-        [(r"^/(.*)$", StaticHandler)]
+        [(r"/", StaticHandler)]
     )
 
-    app.listen(80)
+    app.listen(8081)
 
     tornado.ioloop.IOLoop.instance().start()
