@@ -7,8 +7,7 @@ function Map() {
     var check_move = {
         up: function(value) {
             if (T.player.y - value > 0) {
-                T.player.y -= value;
-                app.events.trigger("player_move");
+                T.player.y -= value;                
                 return true;
             }
             return false;
@@ -16,7 +15,6 @@ function Map() {
         down: function(value) {
             if (T.player.y + value < T.h) {
                 T.player.y += value;
-                app.events.trigger("player_move");
                 return true;
             }
             return false;
@@ -24,7 +22,6 @@ function Map() {
         left: function(value) {
             if (T.player.x - value > 0) {
                 T.player.x -= value;
-                app.events.trigger("player_move");
                 return true;
             }
             return false;
@@ -32,7 +29,6 @@ function Map() {
         right: function(value) {
             if (T.player.x + value < T.w) {
                 T.player.x += value;
-                app.events.trigger("player_move");
                 return true;
             }
             return false;

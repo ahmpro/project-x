@@ -11,6 +11,13 @@ function Application() {
         T.events.init();
     }
 
+    this.directions = {
+        left: 0,
+        up: 1,
+        right: 2,
+        down: 3
+    }
+
     this.canvas = {
         wrap: $("#map_container"),
         bg: $("#map_bg"),
