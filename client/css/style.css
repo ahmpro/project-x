@@ -1,0 +1,10 @@
+.map {
+    width: 904px;
+    height: 554px;
+    position: relative;
+}
+canvas.map {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
