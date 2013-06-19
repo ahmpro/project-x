@@ -5,8 +5,7 @@ function EventManager() {
         _.extend(T, Backbone.Events);
 
         T.on("player_move", function() {
-            app.canvas.ctx.player.fillStyle = '#FFF';
-            app.canvas.ctx.player.fillRect(0, 0, app.canvas.player[0].width, app.canvas.player[0].height);
+            app.canvas.ctx.player.clearRect(0, 0, app.canvas.player[0].width, app.canvas.player[0].height);
 
             app.canvas.ctx.player.fillStyle = '#F00';
             app.canvas.ctx.player.fillRect(
@@ -43,16 +42,28 @@ function EventManager() {
             var key = e.keyCode;
             switch(key) {
                 case 37+app.directions.left:
-                    app.player.move.left(); break;
+                    app.player.rotate.left(); break;
 
                 case 37+app.directions.up:
-                    app.player.move.up(); break;
+                    app.player.rotate.up(); break;
 
                 case 37+app.directions.right:
-                    app.player.move.right(); break;
+                    app.player.rotate.right(); break;
 
                 case 37+app.directions.down:
+                    app.player.rotate.down(); break;
+
+                case app.directions.W:
+                    app.player.move.up(); break; 
+
+                case app.directions.A:
+                    app.player.move.left(); break;
+
+                case app.directions.S:
                     app.player.move.down(); break;
+
+                case app.directions.D:
+                    app.player.move.right(); break;
             }
             return false;
         }, true);

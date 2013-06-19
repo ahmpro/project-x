@@ -14,43 +14,46 @@ function Player(username) {
 
     this.move = {
         up: function() {
-            if (T.direction == app.directions.up) {
-                if (app.map.player.check_move.up(T.speed)) {
-                    this.y -= T.speed;
-                }
-            } else {
-                T.direction = app.directions.up;
+            if (app.map.player.check_move.up(T.speed)) {
+                this.y -= T.speed;
+                app.events.trigger("player_move");
             }
+        },
+        down: function() {
+            if (app.map.player.check_move.down(T.speed)) {
+                this.y += T.speed;
+                app.events.trigger("player_move");
+            }
+        },
+        left: function() {
+            if (app.map.player.check_move.left(T.speed)) {
+                this.x -= T.speed;
+                app.events.trigger("player_move");
+            }
+        },
+        right: function() {
+            if (app.map.player.check_move.right(T.speed)) {
+                this.x += T.speed;
+                app.events.trigger("player_move");
+            }
+        }
+    }
+
+    this.rotate = {
+        up: function() {
+            T.direction = app.directions.up;
             app.events.trigger("player_move");
         },
         down: function() {
-            if (T.direction == app.directions.down) {
-                if (app.map.player.check_move.down(T.speed)) {
-                    this.y += T.speed;
-                }
-            } else {
-                T.direction = app.directions.down;
-            }
+            T.direction = app.directions.down;
             app.events.trigger("player_move");
         },
         left: function() {
-            if (T.direction == app.directions.left) {
-                if (app.map.player.check_move.left(T.speed)) {
-                    this.x -= T.speed;
-                }
-            } else {
-                T.direction = app.directions.left;
-            }
+            T.direction = app.directions.left;
             app.events.trigger("player_move");
         },
         right: function() {
-            if (T.direction == app.directions.right) {
-                if (app.map.player.check_move.right(T.speed)) {
-                    this.x += T.speed;
-                }
-            } else {
-                T.direction = app.directions.right;
-            }
+            T.direction = app.directions.right;
             app.events.trigger("player_move");
         }
     }
