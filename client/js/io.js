@@ -1,5 +1,5 @@
 var IO = Backbone.Model.extend({
-    flags: {//добавить флаг на поднятие клафиши
+    flags: {
         move: {
             up: 0,
             down: 0,
@@ -23,99 +23,92 @@ var IO = Backbone.Model.extend({
     },
 
     keydown: function(e) {
-        //читаем клавиши и ставим флаги
-        var key = keyCode;
+        var key = e.keyCode;
         switch (key){
             case 87:
-                flags.move.up = 1;
+                io.flags.move.up = 1;
                 break;
             case 65:
-                flags.move.left = 1;
+                io.flags.move.left = 1;
                 break;
             case 83:
-                flags.move.down = 1;
+                io.flags.move.down = 1;
                 break;
             case 68:
-                flags.move.right = 1;
+                io.flags.move.right = 1;
                 break;
             //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+            //мб?
+            //player.change_direction(up/down/left/right);
             case 38:
-                flags.direct.up = 1;
+                io.flags.direct.up = 1;
                 break;
             case 37:
-                flags.direct.left = 1;
+                io.flags.direct.left = 1;
                 break;
             case 40:
-                flags.direct.down = 1;
+                io.flags.direct.down = 1;
                 break;
             case 39:
-                flags.direct.right = 1;
+                io.flags.direct.right = 1;
                 break;
         }
     },
 
     keyup: function(e) {
-        //читаем клавиши и снимаем флаги
-        var key = keyCode;
+        var key = e.keyCode;
         switch (key){
             case 87:
-                flags.move.up = 0;
-                flags.move_stop.up = 1;
+                io.flags.move.up = 0;
+                io.flags.move_stop.up = 1;
                 break;
             case 65:
-                flags.move.left = 0;
-                flags.move_stop.left = 1;
+                io.flags.move.left = 0;
+                io.flags.move_stop.left = 1;
                 break;
             case 83:
-                flags.move.down = 0;
-                flags.move_stop.down = 1;
+                io.flags.move.down = 0;
+                io.flags.move_stop.down = 1;
                 break;
             case 68:
-                flags.move.right = 0;
-                flags.move_stop.right = 1;
+                io.flags.move.right = 0;
+                io.flags.move_stop.right = 1;
                 break;
             //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
             case 38:
-                flags.direct.up = 0;
+                io.flags.direct.up = 0;
                 break;
             case 37:
-                flags.direct.left = 0;
+                io.flags.direct.left = 0;
                 break;
             case 40:
-                flags.direct.down = 0;
+                io.flags.direct.down = 0;
                 break;
             case 39:
-                flags.direct.right = 0;
+                io.flags.direct.right = 0;
                 break;
         }
     },
 
     tick: function() {
-        //читаем флаги и говорим player'y куда идти, смотреть
         // implementation here
-        this.trigger('player_move', 'up');
-        //if sum(flag.move) > 2 error;
-        //or
-        //if (flags.move.up * flags.move.down == 1) error;
-        if (flags.move.up||flags.move_stop.up) {
-            player.move(up);
+        if (io.flags.move.up||io.flags.move_stop.up) {
+            io.trigger('player_move', 'up');
         };
-        if (flags.move.down||flags.move_stop.down){
-            player.move(down);
+        if (io.flags.move.down||io.flags.move_stop.down){
+            io.trigger('player_move', 'down');
         };
-        if (flags.move.left||flags.move_stop.left){
-            player.move(left);
+        if (io.flags.move.left||io.flags.move_stop.left){
+            io.trigger('player_move', 'left');
         };
-        if (flags.move.right||flags.move_stop.right) {
-            player.move(right);
+        if (io.flags.move.right||io.flags.move_stop.right) {
+            io.trigger('player_move', 'right');
         };
         //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-        //
-        //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-        flags.move_stop.up = 0;
-        flags.move_stop.down = 0;
-        flags.move_stop.left = 0;
-        flags.move_stop.right = 0;
+        io.flags.move_stop.up = 0;
+        io.flags.move_stop.down = 0;
+        io.flags.move_stop.left = 0;
+        io.flags.move_stop.right = 0;
 
     },
 
@@ -128,6 +121,10 @@ var io = new IO({
     layers: {
         player: $('#map_player')[0],
         bg: $('#map_bg')[0],
+        ctx: {
+            player: $('#map_player')[0].getContext('2d'),
+            bg: $('#map_bg')[0].getContext('2d'),
+        }
     },
 
     timer_period: 10,
@@ -135,5 +132,5 @@ var io = new IO({
 
 io.timer = setInterval(io.tick, io.get('timer_period'));
 
-io.wrap.addEventListener("keydown", io.keydown);
-io.wrap.addEventListener("keyup", io.keyup);
+io.get('wrap').addEventListener("keydown", io.keydown);
+io.get('wrap').addEventListener("keyup", io.keyup);
