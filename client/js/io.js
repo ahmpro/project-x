@@ -13,13 +13,6 @@ var IO = Backbone.Model.extend({
             left: 0,
             right: 0
         },
-
-        direct: {
-            up: 0,
-            down: 0,
-            left: 0,
-            right: 0
-        }
     },
 
     keydown: function(e) {
@@ -38,19 +31,17 @@ var IO = Backbone.Model.extend({
                 io.flags.move.right = 1;
                 break;
             //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-            //мб?
-            //player.change_direction(up/down/left/right);
             case 38:
-                io.flags.direct.up = 1;
+                io.trigger('player_direct', 'up');
                 break;
             case 37:
-                io.flags.direct.left = 1;
+                io.trigger('player_direct', 'left');
                 break;
             case 40:
-                io.flags.direct.down = 1;
+                io.trigger('player_direct', 'down');
                 break;
             case 39:
-                io.flags.direct.right = 1;
+                io.trigger('player_direct', 'right');
                 break;
         }
     },
@@ -73,19 +64,6 @@ var IO = Backbone.Model.extend({
             case 68:
                 io.flags.move.right = 0;
                 io.flags.move_stop.right = 1;
-                break;
-            //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-            case 38:
-                io.flags.direct.up = 0;
-                break;
-            case 37:
-                io.flags.direct.left = 0;
-                break;
-            case 40:
-                io.flags.direct.down = 0;
-                break;
-            case 39:
-                io.flags.direct.right = 0;
                 break;
         }
     },

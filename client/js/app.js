@@ -31,3 +31,4 @@ player.render();
 $('#map_player').focus();
 
 io.on('player_move', player.move);
+io.on('player_direct', player.direct);
