@@ -19,29 +19,29 @@ var IO = Backbone.Model.extend({
         var key = e.keyCode;
         switch (key){
             case 87:
-                io.flags.move.up = 1;
+                this.flags.move.up = 1;
                 break;
             case 65:
-                io.flags.move.left = 1;
+                this.flags.move.left = 1;
                 break;
             case 83:
-                io.flags.move.down = 1;
+                this.flags.move.down = 1;
                 break;
             case 68:
-                io.flags.move.right = 1;
+                this.flags.move.right = 1;
                 break;
             //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
             case 38:
-                io.trigger('player_direct', 'up');
+                this.trigger('player_direct', 'up');
                 break;
             case 37:
-                io.trigger('player_direct', 'left');
+                this.trigger('player_direct', 'left');
                 break;
             case 40:
-                io.trigger('player_direct', 'down');
+                this.trigger('player_direct', 'down');
                 break;
             case 39:
-                io.trigger('player_direct', 'right');
+                this.trigger('player_direct', 'right');
                 break;
         }
     },
@@ -50,43 +50,43 @@ var IO = Backbone.Model.extend({
         var key = e.keyCode;
         switch (key){
             case 87:
-                io.flags.move.up = 0;
-                io.flags.move_stop.up = 1;
+                this.flags.move.up = 0;
+                this.flags.move_stop.up = 1;
                 break;
             case 65:
-                io.flags.move.left = 0;
-                io.flags.move_stop.left = 1;
+                this.flags.move.left = 0;
+                this.flags.move_stop.left = 1;
                 break;
             case 83:
-                io.flags.move.down = 0;
-                io.flags.move_stop.down = 1;
+                this.flags.move.down = 0;
+                this.flags.move_stop.down = 1;
                 break;
             case 68:
-                io.flags.move.right = 0;
-                io.flags.move_stop.right = 1;
+                this.flags.move.right = 0;
+                this.flags.move_stop.right = 1;
                 break;
         }
     },
 
     tick: function() {
         // implementation here
-        if (io.flags.move.up||io.flags.move_stop.up) {
-            io.trigger('player_move', 'up');
+        if (this.flags.move.up||this.flags.move_stop.up) {
+            this.trigger('player_move', 'up');
         };
-        if (io.flags.move.down||io.flags.move_stop.down){
-            io.trigger('player_move', 'down');
+        if (this.flags.move.down||this.flags.move_stop.down){
+            this.trigger('player_move', 'down');
         };
-        if (io.flags.move.left||io.flags.move_stop.left){
-            io.trigger('player_move', 'left');
+        if (this.flags.move.left||this.flags.move_stop.left){
+            this.trigger('player_move', 'left');
         };
-        if (io.flags.move.right||io.flags.move_stop.right) {
-            io.trigger('player_move', 'right');
+        if (this.flags.move.right||this.flags.move_stop.right) {
+            this.trigger('player_move', 'right');
         };
         //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-        io.flags.move_stop.up = 0;
-        io.flags.move_stop.down = 0;
-        io.flags.move_stop.left = 0;
-        io.flags.move_stop.right = 0;
+        this.flags.move_stop.up = 0;
+        this.flags.move_stop.down = 0;
+        this.flags.move_stop.left = 0;
+        this.flags.move_stop.right = 0;
 
     },
 
@@ -107,6 +107,8 @@ var io = new IO({
 
     timer_period: 10,
 });
+
+_.bindAll(io);
 
 io.timer = setInterval(io.tick, io.get('timer_period'));
 
