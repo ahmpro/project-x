@@ -1,41 +1,34 @@
-function Application() {
-    var T = this;
+var Router = Backbone.Router.extend({
 
-    this.login = function (username) {
-        T.player = new Player(username);
-        T.map.set_player(T.player);
-        T.events.trigger("player_move");
+    routes: {
+        'welcome': 'welcome',
+        'game': 'game'
+    },
+
+    welcome: function() {
+        $('body>div').hide();
+        $('#welcome_screen').show();
+    },
+
+    game: function() {
+        $('body>div').hide();
+        $('#game_screen').show();
     }
+});
+var router = new Router();
+Backbone.history.start();
 
-    this.init = function() {
-        T.events.init();
-    }
+$('#btn_login').click(function() {
+    router.navigate('game', {trigger: true});
+});
 
-    this.directions = {
-        left: 0,
-        up: 1,
-        right: 2,
-        down: 3,
-        W: 87,
-        A: 65,
-        S: 83,
-        D: 68
-    }
+router.navigate('welcome', {trigger: true});
+router.navigate('game', {trigger: true});
 
-    this.canvas = {
-        wrap: $("#map_container"),
-        bg: $("#map_bg"),
-        items: $("#map_items"),
-        players: $("#map_players"),
-        player: $("#map_player"),
-        ctx: {
-            bg: $("#map_bg")[0].getContext("2d"),
-            items: $("#map_items")[0].getContext("2d"),
-            players: $("#map_players")[0].getContext("2d"),
-            player: $("#map_player")[0].getContext("2d")
-        }
-    }
+var player = new Player();
+player.render();
 
-    this.map = new Map();
-    this.events = new EventManager();
-}
+$('#map_player').focus();
+
+io.on('player_move', player.move);
+io.on('player_direct', player.direct);
